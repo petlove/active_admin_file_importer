@@ -2,12 +2,10 @@
 
 require 'bundler/setup'
 require 'support/configs/simple_cov_config'
-require 'support/configs/vcr_config'
 SimpleCovConfig.configure
 
-require 'my_gem'
+require 'active_admin_file_importer'
 require 'pry'
-VCRConfig.configure
 
 RSpec.configure do |config|
   config.disable_monkey_patching!
