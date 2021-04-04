@@ -1,36 +1,49 @@
-# [MyGem][gem_page]
+# [ActiveAdminFileImporter]()
 
-[![Build Status][travis_status_image]][travis_page]
-[![Maintainability][code_climate_maintainability_image]][code_climate_maintainability_page]
-[![Test Coverage][code_climate_test_coverage_image]][code_climate_test_coverage_page]
-
+An Importer customizable as we use at Petlove.
+## Table of Contents
+- [Installation](#installation)
+- [Importers](#importers)
+  - [Confirmation Page](#confirmation-page)
+- [Parsers](#parsers)
+  - [Csv](#csv)
+- [Stores](#stores)
+  - [Rails Cache](#rails-cache)
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'my-gem', github: 'petlove/my-gem'
+gem 'active_admin_file_importer', github: 'petlove/active_admin_file_importer'
 ```
 
-## Contributing
+```
+rails generate active_admin_file_importer:install
+```
 
-1. Fork it
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
-5. Create new Pull Request
+## Importers
 
-## License
+These are the available importers
 
-The gem is available as open source under the terms of the [MIT License][mit_license_page].
+### Confirmation Page
 
-[gem_page]: https://github.com/petlove/my_gem
-[code_of_conduct_page]: https://github.com/petlove/my_gem/blob/master/CODE_OF_CONDUCT.md
-[mit_license_page]: https://opensource.org/licenses/MIT
-[contributor_convenant_page]: http://contributor-covenant.org
-[travis_status_image]: https://travis-ci.org/petlove/my_gem.svg?branch=master
-[travis_page]: https://travis-ci.org/petlove/my_gem
-[code_climate_maintainability_image]: https://api.codeclimate.com/v1/badges/2b9a2174ac460c3f44ad/maintainability
-[code_climate_maintainability_page]: https://codeclimate.com/github/petlove/my_gem/maintainability
-[code_climate_test_coverage_image]: https://api.codeclimate.com/v1/badges/2b9a2174ac460c3f44ad/test_coverage
-[code_climate_test_coverage_page]: https://codeclimate.com/github/petlove/my_gem/test_coverage
+```ruby
+file_import importer: ActiveAdminFileImporter::Importers::ConfirmationPage,
+            store: ActiveAdminFileImporter::Stores::RailsCache,
+            parser: ActiveAdminFileImporter::Parsers::Csv,
+            processor: PaymentProcessor,
+            importer: PaymentImporter,
+            name: :payments_import,
+            label: 'Importar Pagamentos',
+            view: :payments
+```
+
+
+
+## Parsers
+
+These are the available parsers
+
+### Csv
+
+
