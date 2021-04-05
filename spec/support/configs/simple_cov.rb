@@ -3,7 +3,7 @@
 require 'simplecov'
 require 'simplecov-console'
 
-module SimpleCovConfig
+module SimpleCov
   def self.configure
     SimpleCov.formatter = SimpleCov::Formatter::Console
     SimpleCov.start do

@@ -8,9 +8,11 @@ module ActiveAdminFileImporter
       def parse!(params)
         raise 'Arquivo inválido' unless params[:file]
 
-        CSV.parse(File.open(params[:file]).read.gsub("\r\n", "\n"), csv_settings)
-           .map(&:to_h)
-           .reject { |item| item.values.compact.length.zero? }
+        File
+          .open(params[:file]).read.gsub("\r\n", "\n")
+          .then { |data| CSV.parse(data, csv_settings) }
+          .map(&:to_h)
+          .reject { |item| item.values.compact.length.zero? }
       end
 
       def csv_settings

@@ -14,11 +14,12 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://https://github.com/petlove/active_admin_file_importer'
   spec.license       = 'MIT'
 
-  spec.files         = Dir['{app,config,lib}/**/*', 'CHANGELOG.md', 'MIT-LICENSE', 'README.md']
+  spec.files         = Dir['{app,config,lib}/**/*', 'spec/factories/**/*', 'CHANGELOG.md', 'MIT-LICENSE', 'README.md']
 
   spec.add_runtime_dependency 'activeadmin'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'factory_bot', '>= 6.1.0'
   spec.add_development_dependency 'pry-byebug', '>= 3.7.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'support/configs/simple_cov_config'
+require 'support/configs/factory_bot'
+require 'support/configs/simple_cov'
 SimpleCovConfig.configure
 
 require 'active_admin_file_importer'

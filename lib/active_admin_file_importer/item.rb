@@ -15,8 +15,8 @@ module ActiveAdminFileImporter
       !@error
     end
 
-    def build_fields(fields)
-      fields.each_with_object({}) { |field, obj| obj[field[0]] = { 'display' => field[1], 'raw' => field[1] } }
+    def build_fields(param)
+      param.to_h.each_with_object({}) { |field, obj| obj[field[0]] = { 'display' => field[1], 'raw' => field[1] } }
     end
   end
 end
