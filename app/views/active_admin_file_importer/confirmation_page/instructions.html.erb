@@ -1,0 +1,13 @@
+<%= form_with url: @route do |f| %>
+  <p class="inline-hints input"> <b>Instruções:</b> </p>
+   <%= render @instructions_partial %>
+
+  <p class="inline-hints input">
+    <label><b>Selecione o arquivo:</b> </label>
+    <%= f.file_field(:file) %>
+  </p>
+
+  <p class="inline-hints input">
+    <%= f.submit 'Continuar', style: "margin-left: 0px" %>
+  </p>
+<% end %>

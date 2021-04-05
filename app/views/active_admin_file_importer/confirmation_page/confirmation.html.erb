@@ -1,0 +1,122 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+  .popover__title {
+    font-size: 24px;
+    line-height: 36px;
+    text-decoration: none;
+    color: rgb(228, 68, 68);
+    text-align: center;
+    padding: 15px 0;
+  }
+
+  .popover__wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  .popover__content {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    transform: translate(0, 20px);
+    background-color: #bfbfbf;
+    padding: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    width: 200px;
+  }
+  .popover__content:before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    right: 170px;
+    top: -8px;
+    border-style: solid;
+    border-width: 0 10px 10px 10px;
+    border-color: transparent transparent #bfbfbf transparent;
+    transition-duration: 0.3s;
+    transition-property: transform;
+  }
+  .popover__wrapper:hover .popover__content {
+    z-index: 10;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0, 0px);
+    transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+  }
+  .popover__message {
+    text-align: center;
+  }
+
+</style>
+
+<b>ID da Importação:</b> <%= @execution.id %>
+</br>
+<b>OK:</b> <%= @execution.successed %>
+</br>
+<b>Warnings:</b> <%= @execution.warning %>
+<% unless @execution.warning.zero? %>
+  - Linhas: <%= @execution.lines(:warning)%>
+<%end%>
+</br>
+<b>Erros:</b> <%= @execution.errored %>
+<% unless @execution.errored.zero? %>
+  - Linhas: <%= @execution.lines(:error)%>
+<%end%>
+</br>
+<b>Total de linhas:</b> <%= @execution.count %>
+</br>
+</br>
+<% if @execution.errored > 0 %>
+  <b>Não é possível importar pois existem erros.</b></br>
+  <b>Passe o mouse em cima do número da linha para ver mais detalhes:</b>
+<% elsif @execution.warning > 0 %>
+  <b>Existem linhas com WARNING.</b></br>
+  <b>Passe o mouse em cima do número da linha para ver mais detalhes.</b></br>
+  <b>Confira todos as linhas antes de continuar:</b>
+<% else @execution.warning > 0 %>
+  <b>Confira todos as linhas antes de continuar:</b>
+<% end %>
+</br>
+</br>
+
+<%= form_with url: @route do |f| %>
+  <table class="index_table index">
+    <thead>
+      <tr>
+        <th scope="col">Linha</th>
+        <% @execution.items.first.fields.keys.each do |key| %>
+          <th scope="col"><%= key %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @execution.items.each do |item| %>
+         <tr>
+            <td>
+              <div class="popover__wrapper">
+                <p style="min-width: 50px;">
+                  <% if item.success && !item.warning %> <i class="fa fa-check-circle" style="color: #33A854;"></i> <% end %>
+                  <% if item.warning %> <i class="fa fa-warning" style="color: #FBBC04;"></i> <% end %>
+                  <% if item.error %> <i class="fa fa-times" style="color: #EA4435;"></i> <% end %>
+                  <%= item.number %>
+                </p>
+                <% if item.warning || item.error %>
+                  <div class="popover__content">
+                    <p class="popover__message"><%= item.warning || item.error %></p>
+                  </div>
+                <% end %>
+              </div>
+            </td>
+
+            <% item.fields.values.each do |value| %>
+              <td title="<%= value['raw'] %>"><%= value['display'] %></td>
+            <% end %>
+         </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <p class="inline-hints input">
+    <%= f.submit 'Importar', style: "margin-left: -16px" if @execution.errored.zero? %>
+  </p>
+<% end %>
