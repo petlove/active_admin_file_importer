@@ -16,19 +16,11 @@ module ActiveAdminFileImporter
       end
 
       def error!(message)
-        @item.error = message
+        @item.error = [@item.error, message].join("\n")
       end
 
       def warning!(message)
-        @item.warning = message
-      end
-
-      def raw!(field)
-        @item.fields[field]['raw'] = yield(display(field))
-      end
-
-      def display(field)
-        @item.fields[field]['display']
+        @item.warning = [@item.warning, message].join("\n")
       end
     end
   end

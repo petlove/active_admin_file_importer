@@ -5,9 +5,7 @@ FactoryBot.define do
     initialize_with { new({}) }
 
     number { 1 }
-    fields do
-      { 'payment_id' => { 'display' => '10', 'raw' => 10 }, 'amount' => { 'display' => '20,0', 'raw' => 20.0 } }
-    end
+    fields { build_list :aafi_field, 3 }
 
     trait :warning do
       warning { 'Some warning' }

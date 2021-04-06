@@ -8,15 +8,26 @@ module ActiveAdminFileImporter
       @number = params[:number]
       @warning = params[:warning]
       @error = params[:error]
-      @fields = build_fields(params[:fields])
+      @fields = params[:fields] || []
     end
 
     def success
       !@error
     end
 
-    def build_fields(param)
-      param.to_h.each_with_object({}) { |field, obj| obj[field[0]] = { 'display' => field[1], 'raw' => field[1] } }
+    def add_field(name, raw)
+      field = Field.new(name, raw)
+      @fields << field
+
+      field
+    end
+
+    def show
+      @fields.filter { |f| !f.hidden }
+    end
+
+    def field(name)
+      @fields.find { |field| field.name == name }
     end
   end
 end

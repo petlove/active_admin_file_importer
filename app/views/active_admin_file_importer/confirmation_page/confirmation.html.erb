@@ -84,8 +84,8 @@
     <thead>
       <tr>
         <th scope="col">Linha</th>
-        <% @execution.items.first.fields.keys.each do |key| %>
-          <th scope="col"><%= key %></th>
+        <% @execution.items.first.show.map(&:name).each do |column| %>
+          <th scope="col"><%= column %></th>
         <% end %>
       </tr>
     </thead>
@@ -108,8 +108,8 @@
               </div>
             </td>
 
-            <% item.fields.values.each do |value| %>
-              <td title="<%= value['raw'] %>"><%= value['display'] %></td>
+            <% item.show.each do |field| %>
+              <td title="<%= field.processed %>"><%= field.raw %></td>
             <% end %>
          </tr>
       <% end %>

@@ -12,7 +12,8 @@ module ActiveAdminFileImporter
           .open(params[:file]).read.gsub("\r\n", "\n")
           .then { |data| CSV.parse(data, csv_settings) }
           .map(&:to_h)
-          .reject { |item| item.values.compact.length.zero? }
+          .reject { |row| row.values.compact.length.zero? }
+          .map { |row| row.map { |key, value| ActiveAdminFileImporter::Field.new(key, value) } }
       end
 
       def csv_settings

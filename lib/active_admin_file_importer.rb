@@ -4,6 +4,7 @@ require 'active_admin_file_importer/version'
 require 'active_admin_file_importer/engine'
 require 'active_admin_file_importer/core'
 require 'active_admin_file_importer/execution'
+require 'active_admin_file_importer/field'
 require 'active_admin_file_importer/item'
 
 require 'active_admin_file_importer/types/base'
