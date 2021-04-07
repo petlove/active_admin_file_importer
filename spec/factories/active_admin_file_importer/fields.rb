@@ -7,6 +7,5 @@ FactoryBot.define do
     name { 'amount' }
     raw { '10,00' }
     processed { 10.0 }
-    hidden { false }
   end
 end

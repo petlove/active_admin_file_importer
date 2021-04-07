@@ -102,7 +102,13 @@
                 </p>
                 <% if item.warning || item.error %>
                   <div class="popover__content">
-                    <p class="popover__message"><%= item.warning || item.error %></p>
+                    <% (item.warning || item.error).split("\n").each do |message| %>
+                    <p class="popover__message">
+                      <% if item.warning %> <i class="fa fa-warning" style="color: #FBBC04;"></i><% end %>
+
+                      <%= message %>
+                    </p>
+                    <% end %>
                   </div>
                 <% end %>
               </div>
