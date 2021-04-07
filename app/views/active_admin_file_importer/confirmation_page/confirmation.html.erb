@@ -73,7 +73,7 @@
   <b>Existem linhas com WARNING.</b></br>
   <b>Passe o mouse em cima do número da linha para ver mais detalhes.</b></br>
   <b>Confira todos as linhas antes de continuar:</b>
-<% else @execution.warning > 0 %>
+<% else %>
   <b>Confira todos as linhas antes de continuar:</b>
 <% end %>
 </br>
@@ -102,12 +102,16 @@
                 </p>
                 <% if item.warning || item.error %>
                   <div class="popover__content">
-                    <% (item.warning || item.error).split("\n").each do |message| %>
-                    <p class="popover__message">
-                      <% if item.warning %> <i class="fa fa-warning" style="color: #FBBC04;"></i><% end %>
+                    <% item.warning&.split("\n")&.each do |message| %>
+                      <p class="popover__message">
+                        <i class="fa fa-warning" style="color: #FBBC04; margin-right: 3px;"></i><%= message %>
+                      </p>
+                    <% end %>
 
-                      <%= message %>
-                    </p>
+                    <% item.error&.split("\n")&.each do |message| %>
+                      <p class="popover__message">
+                        <i class="fa fa-times" style="color: #EA4435; margin-right: 3px;"></i><%= message %>
+                      </p>
                     <% end %>
                   </div>
                 <% end %>
