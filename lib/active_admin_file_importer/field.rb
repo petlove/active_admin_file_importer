@@ -2,7 +2,7 @@
 
 module ActiveAdminFileImporter
   class Field
-    attr_accessor :name, :raw, :processed, :hidden
+    attr_accessor :name, :raw, :processed, :hidden, :order
 
     def initialize(name, raw)
       @name = name
@@ -18,6 +18,15 @@ module ActiveAdminFileImporter
     def hide!
       @hidden = true
       self
+    end
+
+    def order!(value)
+      @order = value
+    end
+
+    def raw!(value)
+      @raw = value
+      @processed = raw
     end
   end
 end

@@ -16,11 +16,11 @@ module ActiveAdminFileImporter
       end
 
       def error!(message)
-        @item.error = [@item.error, message].compact.join("\n")
+        @item.error!(message)
       end
 
       def warning!(message)
-        @item.warning = [@item.warning, message].compact.join("\n")
+        @item.warning!(message)
       end
     end
   end

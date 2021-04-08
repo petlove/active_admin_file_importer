@@ -10,6 +10,7 @@ module ActiveAdminFileImporter
 
         File
           .open(params[:file]).read.gsub("\r\n", "\n")
+          .force_encoding(csv_settings[:encoding])
           .then { |data| CSV.parse(data, csv_settings) }
           .map(&:to_h)
           .reject { |row| row.values.compact.length.zero? }
