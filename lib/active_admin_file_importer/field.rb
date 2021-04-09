@@ -2,6 +2,8 @@
 
 module ActiveAdminFileImporter
   class Field
+    MAX_ORDER = 9999
+
     attr_accessor :name, :raw, :processed, :hidden, :order
 
     def initialize(name, raw)
@@ -18,6 +20,14 @@ module ActiveAdminFileImporter
     def hide!
       @hidden = true
       self
+    end
+
+    def show
+      !@hidden
+    end
+
+    def order
+      @order || MAX_ORDER
     end
 
     def order!(value)

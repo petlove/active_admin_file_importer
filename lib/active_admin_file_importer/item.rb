@@ -26,7 +26,7 @@ module ActiveAdminFileImporter
     end
 
     def show_sorted
-      @fields.filter { |f| !f.hidden }.sort_by { |a| a.order || 9999 }
+      @fields.filter(&:show).sort_by(&:order)
     end
 
     def field(name)
@@ -47,7 +47,7 @@ module ActiveAdminFileImporter
 
     def repeated!
       @repeated = true
-      warning!('Item repetido!')
+      error!('Item repetido!')
       self
     end
   end

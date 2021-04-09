@@ -59,24 +59,13 @@
 
 </br>
 
-<% if @execution.repeated > 0 %>
-  <b>Existem linhas repetidas</b></br>
-<% end %>
-
 <% if @execution.errored > 0 %>
   <b>Não é possível importar pois existem erros.</b></br>
-<% end %>
-
-<% if @execution.warning > 0 %>
-  <b>Existem linhas com WARNING.</b></br>
-<% end %>
-
-<% if @execution.warning > 0 || @execution.warning > 0 %>
   <b>Passe o mouse em cima do número da linha para ver mais detalhes.</b></br>
 <% end %>
 
 <% if @execution.errored.zero? %>
-  <b>Confira todos as linhas antes de continuar:</b></br>
+  <b>Confira todas as linhas antes de continuar:</b></br>
 <% end %>
 
 </br>

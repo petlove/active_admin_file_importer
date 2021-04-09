@@ -9,12 +9,22 @@ module ActiveAdminFileImporter
         raise 'Arquivo inválido' unless params[:file]
 
         File
-          .open(params[:file]).read.gsub("\r\n", "\n")
-          .force_encoding(csv_settings[:encoding])
+          .open(params[:file], 'r:bom|utf-8')
+          .read
+          .gsub("\r\n", "\n")
           .then { |data| CSV.parse(data, csv_settings) }
           .map(&:to_h)
           .reject { |row| row.values.compact.length.zero? }
-          .map { |row| row.map { |key, value| ActiveAdminFileImporter::Field.new(key, value) } }
+          .map do |row|
+            count = row.keys.length
+            row
+              .each_with_index
+              .map do |field, index|
+                ActiveAdminFileImporter::Field
+                  .new(field[0], field[1])
+                  .tap { |f| f.order!(ActiveAdminFileImporter::Field::MAX_ORDER - count + index) }
+              end
+          end
       end
 
       def csv_settings
