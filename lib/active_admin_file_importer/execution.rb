@@ -16,7 +16,7 @@ module ActiveAdminFileImporter
     def build_items(items)
       @items = items
       @count = items.length
-      @repeated = handle_repateds!
+      @repeated = handle_repeateds!
       @successed = items.filter(&:success).length
       @errored = items.filter(&:error).length
       @warning = items.filter(&:warning).length
