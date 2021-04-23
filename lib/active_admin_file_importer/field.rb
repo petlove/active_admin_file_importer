@@ -7,9 +7,9 @@ module ActiveAdminFileImporter
     attr_accessor :name, :raw, :processed, :hidden, :order
 
     def initialize(name, raw)
-      @name = name
-      @raw = raw
-      @processed = raw
+      @name = name.strip if name
+      @raw = raw.strip if raw
+      @processed = @raw
     end
 
     def process!
