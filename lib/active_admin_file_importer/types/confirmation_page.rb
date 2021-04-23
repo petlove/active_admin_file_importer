@@ -5,7 +5,7 @@ module ActiveAdminFileImporter
     class ConfirmationPage < Base
       def build!
         build_instructions_page
-        build_instructions_link
+        build_instructions_link if @link
         build_confirmation_page
         build_process_api
         build_confirm_api

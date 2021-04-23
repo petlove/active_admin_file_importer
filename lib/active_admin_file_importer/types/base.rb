@@ -3,7 +3,7 @@
 module ActiveAdminFileImporter
   module Types
     class Base
-      attr_accessor :resource, :id, :importer, :store, :parser, :processor, :name, :label, :admin
+      attr_accessor :resource, :id, :importer, :store, :parser, :processor, :name, :label, :admin, :link
 
       def initialize(resource, params)
         @resource = resource
@@ -14,6 +14,7 @@ module ActiveAdminFileImporter
         @name = params[:name]
         @label = params[:label]
         @admin = params[:admin]
+        @link = params[:link].nil? ? true : params[:link]
       end
 
       private
