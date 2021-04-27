@@ -33,6 +33,10 @@ module ActiveAdminFileImporter
       @fields.find { |field| field.name == name }
     end
 
+    def [](field)
+      field(field)
+    end
+
     def digest
       Digest::MD5.hexdigest(@fields.to_json)
     end
