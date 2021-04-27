@@ -1,0 +1,49 @@
+<table class="index_table index">
+  <thead>
+    <tr>
+      <th scope="col">Linha</th>
+      <% execution.columns.each do |column| %>
+        <th scope="col"><%= column %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.each do |item| %>
+        <tr>
+          <td>
+            <div class="popover__wrapper">
+              <p style="min-width: 50px;">
+                <% if item.error %>
+                  <i class="fa fa-times" style="color: #EA4435;"></i>
+                <% elsif item.warning %>
+                  <i class="fa fa-warning" style="color: #FBBC04;"></i>
+                <% else %>
+                  <i class="fa fa-check-circle" style="color: #33A854;"></i>
+                <% end %>
+                <%= item.number %>
+              </p>
+              <% if item.warning || item.error %>
+                <div class="popover__content">
+                  <% item.warning&.split("\n")&.each do |message| %>
+                    <p class="popover__message">
+                      <i class="fa fa-warning" style="color: #FBBC04; margin-right: 3px;"></i><%= message %>
+                    </p>
+                  <% end %>
+
+                  <% item.error&.split("\n")&.each do |message| %>
+                    <p class="popover__message">
+                      <i class="fa fa-times" style="color: #EA4435; margin-right: 3px;"></i><%= message %>
+                    </p>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </td>
+
+          <% item.show_sorted.each do |field| %>
+            <td title="<%= field.processed %>"><%= field.raw %></td>
+          <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>

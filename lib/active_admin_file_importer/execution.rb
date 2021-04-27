@@ -35,11 +35,16 @@ module ActiveAdminFileImporter
         .length
     end
 
-    def numbers(kind)
-      items
-        .filter(&kind)
-        .map(&:number)
-        .join(', ')
+    def warnings
+      @items.filter(&:warning)
+    end
+
+    def errors
+      @items.filter(&:error)
+    end
+
+    def repeateds
+      @items.filter(&:repeated)
     end
   end
 end

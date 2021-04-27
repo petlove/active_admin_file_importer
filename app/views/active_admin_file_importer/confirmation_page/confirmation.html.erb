@@ -49,76 +49,44 @@
 
 </style>
 
-<b>ID da Importação:</b> <%= @execution.id %>
-</br>
-<b>OK:</b> <%= @execution.successed %></br>
-<b>Warnings:</b> <%= @execution.warning %><% unless @execution.warning.zero? %> - Linhas: <%= @execution.numbers(:warning)%><%end%></br>
-<b>Repetidas:</b> <%= @execution.repeated %><% unless @execution.repeated.zero? %> - Linhas: <%= @execution.numbers(:repeated)%><%end%></br>
-<b>Erros:</b> <%= @execution.errored %><% unless @execution.errored.zero? %> - Linhas: <%= @execution.numbers(:error)%><%end%></br>
+<b>ID da Importação:</b> <%= @execution.id %></br>
 <b>Total de linhas:</b> <%= @execution.count %></br>
+<b>OK:</b> <%= @execution.successed %></br>
+<b>Warnings:</b> <%= @execution.warning %></br>
+<% if @execution.warnings.any? %>
+  <%=
+    render partial: "#{ActiveAdminFileImporter::Core.gem_name}/confirmation_page/table",
+           locals: { execution: @execution, items: @execution.warnings }
+  %>
+  </br>
+<% end %>
 
-</br>
+<b>Repetidas:</b> <%= @execution.repeated %></br>
+<% if @execution.repeateds.any? %>
+  <%=
+    render partial: "#{ActiveAdminFileImporter::Core.gem_name}/confirmation_page/table",
+           locals: { execution: @execution, items: @execution.repeateds }
+  %>
+  </br>
+<% end %>
 
-<% if @execution.errored > 0 %>
+<b>Erros:</b> <%= @execution.errored %></br>
+<% if @execution.errors.any? %>
   <b>Não é possível importar pois existem erros.</b></br>
   <b>Passe o mouse em cima do número da linha para ver mais detalhes.</b></br>
+  <%=
+    render partial: "#{ActiveAdminFileImporter::Core.gem_name}/confirmation_page/table",
+           locals: { execution: @execution, items: @execution.errors }
+  %>
+  </br>
 <% end %>
 
-<% if @execution.errored.zero? %>
-  <b>Confira todas as linhas antes de continuar:</b></br>
-<% end %>
-
-</br>
+<b>Confira todas as linhas antes de continuar:</b></br>
 <%= form_with url: @route do |f| %>
-  <table class="index_table index">
-    <thead>
-      <tr>
-        <th scope="col">Linha</th>
-        <% @execution.columns.each do |column| %>
-          <th scope="col"><%= column %></th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% @execution.items.each do |item| %>
-         <tr>
-            <td>
-              <div class="popover__wrapper">
-                <p style="min-width: 50px;">
-                  <% if item.error %>
-                    <i class="fa fa-times" style="color: #EA4435;"></i>
-                  <% elsif item.warning %>
-                    <i class="fa fa-warning" style="color: #FBBC04;"></i>
-                  <% else %>
-                    <i class="fa fa-check-circle" style="color: #33A854;"></i>
-                  <% end %>
-                  <%= item.number %>
-                </p>
-                <% if item.warning || item.error %>
-                  <div class="popover__content">
-                    <% item.warning&.split("\n")&.each do |message| %>
-                      <p class="popover__message">
-                        <i class="fa fa-warning" style="color: #FBBC04; margin-right: 3px;"></i><%= message %>
-                      </p>
-                    <% end %>
-
-                    <% item.error&.split("\n")&.each do |message| %>
-                      <p class="popover__message">
-                        <i class="fa fa-times" style="color: #EA4435; margin-right: 3px;"></i><%= message %>
-                      </p>
-                    <% end %>
-                  </div>
-                <% end %>
-              </div>
-            </td>
-
-            <% item.show_sorted.each do |field| %>
-              <td title="<%= field.processed %>"><%= field.raw %></td>
-            <% end %>
-         </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%=
+    render partial: "#{ActiveAdminFileImporter::Core.gem_name}/confirmation_page/table",
+           locals: { execution: @execution, items: @execution.items }
+  %>
 
   <p class="inline-hints input">
     <%= f.submit 'Importar', style: "margin-left: -16px" if @execution.errored.zero? %>
