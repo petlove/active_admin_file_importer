@@ -5,8 +5,8 @@ module ActiveAdminFileImporter
     class Base
       attr_accessor :settings
 
-      def initialize(params)
-        @settings = params.to_h
+      def initialize(params = {})
+        @settings = params
       end
     end
   end
