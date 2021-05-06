@@ -41,7 +41,15 @@
           </td>
 
           <% item.show_sorted.each do |field| %>
-            <td title="<%= field.processed %>"><%= field.raw %></td>
+            <td title="<%= field.processed %>">
+              <% if field.link %>
+                <a target="_blank" href="<%= field.link%>" >
+                  <%= field.raw %>
+                </a>
+              <% else %>
+                <%= field.raw %>
+              <% end %>
+            </td>
           <% end %>
         </tr>
     <% end %>

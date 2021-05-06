@@ -4,7 +4,7 @@ module ActiveAdminFileImporter
   class Field
     MAX_ORDER = 9999
 
-    attr_accessor :name, :raw, :processed, :hidden, :order
+    attr_accessor :name, :raw, :processed, :hidden, :order, :link
 
     def initialize(name, raw)
       @name = name.strip if name
@@ -14,6 +14,11 @@ module ActiveAdminFileImporter
 
     def process!
       @processed = yield raw
+      self
+    end
+
+    def link!
+      @link = yield self
       self
     end
 
