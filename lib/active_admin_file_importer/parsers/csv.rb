@@ -12,7 +12,7 @@ module ActiveAdminFileImporter
           .open(params[:file], 'r:bom|utf-8')
           .read
           .gsub("\r\n", "\n")
-          .then { |data| CSV.parse(data, csv_settings) }
+          .then { |data| CSV.parse(data, **csv_settings) }
           .map(&:to_h)
           .reject { |row| row.values.compact.length.zero? }
           .map do |row|
