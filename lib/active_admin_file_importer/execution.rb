@@ -30,7 +30,7 @@ module ActiveAdminFileImporter
       @items
         .group_by(&:digest)
         .filter { |_digest, values| values.length > 1 }
-        .flat_map { |_key, values| values }
+        .flat_map { |_key, values| values.sort_by {|v| v.index}[1..] }
         .each(&:repeated!)
         .length
     end
